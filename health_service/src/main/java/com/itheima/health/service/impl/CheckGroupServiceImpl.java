@@ -66,6 +66,7 @@ public class CheckGroupServiceImpl implements CheckGroupService {
         return checkGroupIds;
     }
 
+
     @Override
     @Transactional
     public void update(CheckGroup checkGroup, Integer[] checkitemIds) {
