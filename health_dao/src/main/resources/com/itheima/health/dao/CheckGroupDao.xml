@@ -33,7 +33,19 @@
         update t_checkgroup set code=#{code},name=#{name},helpCode=#{helpCode},sex=#{sex},remark=#{remark},attention=#{attention} where id=#{id}
     </update>
 
-    <delete id="delete" parameterType="int">
-        delete from t_checkgroup_checkitem where checkgroup_id=#{checkGroupId}
+    <delete id="deleteCheckGroupCheckItem" parameterType="int">
+        delete from t_checkgroup_checkitem where checkgroup_id=#{id}
+    </delete>
+
+    <select id="findAll" resultType="CheckGroup">
+        select * from t_checkgroup
+    </select>
+
+    <select id="findCountByCheckGroupId" parameterType="int" resultType="int">
+        select count("1") from t_setmeal_checkgroup where checkgroup_id=#{id}
+    </select>
+
+    <delete id="deleteById" parameterType="int">
+        delete from t_checkgroup where id=#{id}
     </delete>
 </mapper>

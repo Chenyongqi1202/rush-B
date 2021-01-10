@@ -6,6 +6,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.itheima.health.entity.PageResult;
 import com.itheima.health.entity.QueryPageBean;
+import com.itheima.health.exception.MyException;
 import com.itheima.health.pojo.CheckGroup;
 import com.itheima.health.dao.CheckGroupDao;
 import com.itheima.health.service.CheckGroupService;
@@ -73,12 +74,31 @@ public class CheckGroupServiceImpl implements CheckGroupService {
         //先更新检查组信息
         checkGroupDao.update(checkGroup);
         //删除检查组与检查项的关系
-        checkGroupDao.delete(checkGroup.getId());
+        checkGroupDao.deleteCheckGroupCheckItem(checkGroup.getId());
         //添加检查组与检查项的关系
         if (null !=checkitemIds){
             for (Integer checkitemId : checkitemIds) {
                 checkGroupDao.addCheckGroupCheckItem(checkGroup.getId(),checkitemId);
             }
         }
+    }
+
+    @Override
+    public List<CheckGroup> findAll() {
+        List<CheckGroup> checkGroupList = checkGroupDao.findAll();
+        return checkGroupList;
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(int id) {
+        int count = checkGroupDao.findCountByCheckGroupId(id);
+        if (count > 0){
+            throw new MyException("该检查组被套餐使用了,不能删除");
+        }
+        //删除检查组与检查项的关系
+        checkGroupDao.deleteCheckGroupCheckItem(id);
+        //删除检查组
+        checkGroupDao.deleteById(id);
     }
 }

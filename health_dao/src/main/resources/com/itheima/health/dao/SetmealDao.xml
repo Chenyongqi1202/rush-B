@@ -11,4 +11,17 @@
      <insert id="addSetmealCheckGroup">
          insert into t_setmeal_checkgroup (setmeal_id,checkgroup_id) values (#{setmealId},#{checkgroupId})
      </insert>
+
+    <select id="findCheckGroupIdsBySetmealId" parameterType="int" resultType="int">
+        SELECT checkgroup_id FROM t_setmeal_checkgroup WHERE setmeal_id=#{id}
+    </select>
+
+    <select id="findPage" parameterType="String" resultType="Setmeal">
+        select * from t_setmeal
+        <where>
+            <if test="value != null and value.length>0">
+                code like #{queryString} or name like #{queryString} or helpCode like #{queryString}
+            </if>
+        </where>
+    </select>
 </mapper>

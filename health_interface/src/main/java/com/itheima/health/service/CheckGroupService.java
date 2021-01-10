@@ -48,4 +48,16 @@ public interface CheckGroupService {
      * @param checkitemIds
      */
     void update(CheckGroup checkGroup, Integer[] checkitemIds);
+
+    /**
+     * 查询所有检查组信息
+     * @return
+     */
+    List<CheckGroup> findAll();
+
+    /**
+     * 删除检查组
+     * @param id
+     */
+    void deleteById(int id);
 }

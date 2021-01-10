@@ -55,8 +55,29 @@ public interface CheckGroupDao {
     void update(CheckGroup checkGroup);
 
     /**
-     * 删除旧的检查组与检查项关联
-     * @param checkGroupId
+     * 删除检查组与检查项的关系
+     * @param id
      */
-    void delete(Integer checkGroupId);
+    void deleteCheckGroupCheckItem(int id);
+
+    /**
+     * 查询在被使用的检查组数量
+     * @param id
+     * @return
+     */
+    int findCountByCheckGroupId(int id);
+
+
+
+    /**
+     * 删除检查组
+     * @param id
+     */
+    void deleteById(int id);
+
+    /**
+     * 查询所有检查组信息
+     * @return
+     */
+    List<CheckGroup> findAll();
 }

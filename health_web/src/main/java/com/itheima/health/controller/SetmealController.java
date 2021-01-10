@@ -2,6 +2,8 @@ package com.itheima.health.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.itheima.health.constant.MessageConstant;
+import com.itheima.health.entity.PageResult;
+import com.itheima.health.entity.QueryPageBean;
 import com.itheima.health.entity.Result;
 import com.itheima.health.exception.MyException;
 import com.itheima.health.pojo.Setmeal;
@@ -9,14 +11,12 @@ import com.itheima.health.service.SetmealService;
 import com.itheima.health.utils.QiNiuUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -81,4 +81,18 @@ public class SetmealController {
         setmealService.add(setmeal,checkgroupIds);
         return new Result(true, MessageConstant.ADD_SETMEAL_SUCCESS);
     }
+
+
+    @GetMapping("/findCheckGroupIdsBySetmealId")
+    public Result findCheckGroupIdsBySetmealId(int id){
+        List<Integer> checkGroupIds = setmealService.findCheckGroupIdsBySetmealId(id);
+        return new Result(true, MessageConstant.QUERY_CHECKGROUP_SUCCESS,checkGroupIds);
+    }
+
+    @PostMapping("/findPage")
+    public Result findPage(@RequestBody QueryPageBean queryPageBean){
+        PageResult<Setmeal> pageResult = setmealService.findPage(queryPageBean);
+        return new Result(true, MessageConstant.QUERY_SETMEALLIST_SUCCESS,pageResult);
+    }
+
 }

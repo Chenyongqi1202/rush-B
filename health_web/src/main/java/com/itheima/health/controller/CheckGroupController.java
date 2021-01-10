@@ -32,56 +32,68 @@ public class CheckGroupController {
 
     /**
      * 添加检查组
-     * @param checkGroup  检查组信息
+     *
+     * @param checkGroup   检查组信息
      * @param checkitemIds 选择的检查项ID数组
      * @return
      */
     @PostMapping("/add")
-    public Result add(@RequestBody CheckGroup checkGroup,Integer[] checkitemIds){
+    public Result add(@RequestBody CheckGroup checkGroup, Integer[] checkitemIds) {
 
         //调用服务 添加检查组
-        checkGroupService.add(checkGroup,checkitemIds);
+        checkGroupService.add(checkGroup, checkitemIds);
 
-        return new Result(true,MessageConstant.ADD_CHECKGROUP_SUCCESS);
+        return new Result(true, MessageConstant.ADD_CHECKGROUP_SUCCESS);
     }
 
     /**
      * 分页查询
+     *
      * @param queryPageBean 分页条件
      * @return
      */
     @PostMapping("/findPage")
-    public Result findPage(@RequestBody QueryPageBean queryPageBean){
+    public Result findPage(@RequestBody QueryPageBean queryPageBean) {
 
         //调用服务 分页查询检查组
         PageResult<CheckGroup> pageResult = checkGroupService.findPage(queryPageBean);
-        return new Result(true,MessageConstant.QUERY_CHECKGROUP_SUCCESS,pageResult);
+        return new Result(true, MessageConstant.QUERY_CHECKGROUP_SUCCESS, pageResult);
     }
 
     @GetMapping("/findById")
-    public Result findById(int id){
+    public Result findById(int id) {
 
         //调用服务 根据id查询检查组信息,数据回显
         CheckGroup checkGroup = checkGroupService.findById(id);
-        return new Result(true,MessageConstant.QUERY_CHECKGROUP_SUCCESS,checkGroup);
+        return new Result(true, MessageConstant.QUERY_CHECKGROUP_SUCCESS, checkGroup);
     }
 
     @GetMapping("/findCheckItemIdsByCheckGroupId")
-    public Result findCheckItemIdsByCheckGroupId(int id){
+    public Result findCheckItemIdsByCheckGroupId(int id) {
         //调用服务 根据检查组id查询所有检查项的id信息,数据回显
         List<Integer> checkItemIds = checkGroupService.findCheckItemIdsByCheckGroupId(id);
-        return new Result(true,MessageConstant.QUERY_CHECKGROUP_SUCCESS,checkItemIds);
+        return new Result(true, MessageConstant.QUERY_CHECKGROUP_SUCCESS, checkItemIds);
     }
 
     @PostMapping("/update")
-    public Result update(@RequestBody CheckGroup checkGroup,Integer[] checkitemIds){
+    public Result update(@RequestBody CheckGroup checkGroup, Integer[] checkitemIds) {
 
         //调用服务 修改检查组
-        checkGroupService.update(checkGroup,checkitemIds);
+        checkGroupService.update(checkGroup, checkitemIds);
 
-        return new Result(true,MessageConstant.EDIT_CHECKGROUP_SUCCESS);
+        return new Result(true, MessageConstant.EDIT_CHECKGROUP_SUCCESS);
     }
 
+    @GetMapping("/findAll")
+    public Result findAll() {
+        List<CheckGroup> checkGroupList = checkGroupService.findAll();
+        return new Result(true, MessageConstant.QUERY_CHECKGROUP_SUCCESS, checkGroupList);
+    }
 
+    @PostMapping("/deleteById")
+    public Result deleteById(int id) {
+        checkGroupService.deleteById(id);
+        return new Result(true, MessageConstant.DELETE_CHECKGROUP_SUCCESS);
+    }
 
 }
