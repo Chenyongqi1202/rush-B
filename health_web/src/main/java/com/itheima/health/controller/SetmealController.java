@@ -39,11 +39,12 @@ public class SetmealController {
 
     /**
      * 上传图片
+     *
      * @param imgFile
      * @return
      */
     @PostMapping("/upload")
-    public Result upload(MultipartFile imgFile){
+    public Result upload(MultipartFile imgFile) {
         //1.获取文件名
         String originalFilename = imgFile.getOriginalFilename();
         //2.截取后缀名
@@ -59,40 +60,71 @@ public class SetmealController {
              * imgFile.getBytes() : 上传文件的字节数组
              * filename :文件名
              */
-            QiNiuUtils.uploadViaByte(imgFile.getBytes(),filename);
+            QiNiuUtils.uploadViaByte(imgFile.getBytes(), filename);
             //6.构建返回的数据
         /*{
             imgName: 图片名 , 补全formData.img
             domain: 七牛的域名 图片回显imageUrl = domain+图片名
         }*/
-            Map<String,String> map = new HashMap<String, String>();
-            map.put("imgName",filename);
-            map.put("domain",QiNiuUtils.DOMAIN);
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("imgName", filename);
+            map.put("domain", QiNiuUtils.DOMAIN);
             //7.放到result里,再返回给页面
-            return new Result(true, MessageConstant.PIC_UPLOAD_SUCCESS,map);
+            return new Result(true, MessageConstant.PIC_UPLOAD_SUCCESS, map);
         } catch (IOException e) {
-            log.error("上传文件失败",e);
+            log.error("上传文件失败", e);
             return new Result(true, MessageConstant.PIC_UPLOAD_FAIL);
         }
     }
 
     @PostMapping("/add")
-    public Result add(@RequestBody Setmeal setmeal,Integer[] checkgroupIds){
-        setmealService.add(setmeal,checkgroupIds);
+    public Result add(@RequestBody Setmeal setmeal, Integer[] checkgroupIds) {
+        setmealService.add(setmeal, checkgroupIds);
         return new Result(true, MessageConstant.ADD_SETMEAL_SUCCESS);
     }
 
 
     @GetMapping("/findCheckGroupIdsBySetmealId")
-    public Result findCheckGroupIdsBySetmealId(int id){
+    public Result findCheckGroupIdsBySetmealId(int id) {
         List<Integer> checkGroupIds = setmealService.findCheckGroupIdsBySetmealId(id);
-        return new Result(true, MessageConstant.QUERY_CHECKGROUP_SUCCESS,checkGroupIds);
+        return new Result(true, MessageConstant.QUERY_CHECKGROUP_SUCCESS, checkGroupIds);
     }
 
     @PostMapping("/findPage")
-    public Result findPage(@RequestBody QueryPageBean queryPageBean){
+    public Result findPage(@RequestBody QueryPageBean queryPageBean) {
         PageResult<Setmeal> pageResult = setmealService.findPage(queryPageBean);
-        return new Result(true, MessageConstant.QUERY_SETMEALLIST_SUCCESS,pageResult);
+        return new Result(true, MessageConstant.QUERY_SETMEALLIST_SUCCESS, pageResult);
+    }
+
+
+    @GetMapping("/findById")
+    public Result findById(int id) {
+        Setmeal setmeal = setmealService.findById(id);
+        Map<String, Object> map = new HashMap<>();
+        map.put("setmeal", setmeal);
+        map.put("domain", QiNiuUtils.DOMAIN);
+
+        return new Result(true, MessageConstant.QUERY_SETMEAL_SUCCESS, map);
+
+    }
+
+    @PostMapping("/update")
+    public Result update(@RequestBody Setmeal setmeal, Integer[] checkgroupIds) {
+        setmealService.update(setmeal, checkgroupIds);
+        return new Result(true, MessageConstant.EDIT_SETMEAL_SUCCESS);
+    }
+
+
+    /**
+     * 通过id删除套餐
+     *
+     * @param id
+     * @return
+     */
+    @PostMapping("/deleteById")
+    public Result deleteById(int id) {
+        setmealService.deleteById(id);
+        return new Result(true, "删除套餐成功");
     }
 
 }

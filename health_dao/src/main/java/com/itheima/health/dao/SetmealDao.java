@@ -1,6 +1,7 @@
 package com.itheima.health.dao;
 
 import com.github.pagehelper.Page;
+import com.itheima.health.exception.MyException;
 import com.itheima.health.pojo.Setmeal;
 import org.apache.ibatis.annotations.Param;
 
@@ -41,4 +42,39 @@ public interface SetmealDao {
      * @return
      */
     Page<Setmeal> findPage(String queryString);
+
+    /**
+     * 查询套餐信息
+     * @param id
+     * @return
+     */
+    Setmeal findById(int id);
+
+
+    /**
+     * 更新套餐信息
+     * @param setmeal
+     */
+    void update(Setmeal setmeal);
+
+    /**
+     * 删除套餐和检查组的关系
+     * @param id
+     * @throws MyException
+     */
+    void deleteBySetmealId(Integer id);
+
+    /**
+     * 查询套餐是否被订单使用
+     * @param id
+     * @return
+     */
+    int findCountBySetmealId(int id);
+
+
+    /**
+     * 删除套餐和检查组的关系
+     * @param id
+     */
+    void deleteById(int id);
 }
