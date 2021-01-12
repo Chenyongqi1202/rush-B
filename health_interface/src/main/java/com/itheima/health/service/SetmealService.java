@@ -56,4 +56,23 @@ public interface SetmealService {
      * @param id
      */
     void deleteById(int id) throws MyException;
+
+    /**
+     * 查询所有的图片
+     * @return
+     */
+    List<String> findImgs();
+
+    /**
+     * 查询套餐列表
+     * @return
+     */
+    List<Setmeal> findAll();
+
+    /**
+     * 套餐详情页面展示
+     * @param id
+     * @return
+     */
+    List<Setmeal> findDetailById(int id);
 }

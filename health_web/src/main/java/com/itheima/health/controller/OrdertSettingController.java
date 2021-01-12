@@ -71,4 +71,11 @@ public class OrdertSettingController {
         List<Map<String, Integer>> mapList = ordertSettingService.getOrderSettingByMonth(month);
         return new Result(true, MessageConstant.QUERY_ORDER_SUCCESS,mapList);
     }
+
+    @PostMapping("/editNumberByDate")
+    public Result editNumberByDate(@RequestBody OrderSetting orderSetting){
+
+        ordertSettingService.editNumberByDate(orderSetting);
+        return new Result(true, MessageConstant.ORDERSETTING_SUCCESS);
+    }
 }

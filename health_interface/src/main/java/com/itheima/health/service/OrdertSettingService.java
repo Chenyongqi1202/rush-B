@@ -16,6 +16,7 @@ public interface OrdertSettingService {
     /**
      * 批量导入预约设置
      * @param orderSettingList
+     * @throws MyException
      */
     void addBactch(List<OrderSetting> orderSettingList)throws MyException;
 
@@ -25,4 +26,11 @@ public interface OrdertSettingService {
      * @return
      */
     List<Map<String, Integer>> getOrderSettingByMonth(String month);
+
+    /**
+     * 根据日期进行预约人数设置
+     * @param orderSetting
+     * @throws MyException
+     */
+    void editNumberByDate(OrderSetting orderSetting) throws MyException;
 }
