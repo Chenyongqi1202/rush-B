@@ -70,9 +70,9 @@ public interface SetmealService {
     List<Setmeal> findAll();
 
     /**
-     * 套餐详情页面展示
+     * 套餐页面详情展示
      * @param id
      * @return
      */
-    List<Setmeal> findDetailById(int id);
+    Setmeal findDetailById(int id);
 }

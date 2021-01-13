@@ -113,7 +113,7 @@ public class SetmealServiceImpl implements SetmealService {
     }
 
     @Override
-    public List<Setmeal> findDetailById(int id) {
-        return null;
+    public Setmeal findDetailById(int id) {
+        return setmealDao.findDetailById(id);
     }
 }

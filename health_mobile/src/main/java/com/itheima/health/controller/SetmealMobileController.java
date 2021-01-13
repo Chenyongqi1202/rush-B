@@ -48,10 +48,10 @@ public class SetmealMobileController {
     @GetMapping("/findDetailById")
     public Result findDetailById(int id){
         //调用服务来进行查询
-        List<Setmeal> list = setmealService.findDetailById(id);
+        Setmeal setmeal = setmealService.findDetailById(id);
         //拼接图片的完整路径
-        list.forEach(s->s.setImg(QiNiuUtils.DOMAIN +s.getImg()));
+        setmeal.setImg(QiNiuUtils.DOMAIN +setmeal.getImg());
 
-        return new Result(true, MessageConstant.QUERY_SETMEALLIST_SUCCESS,list);
+        return new Result(true, MessageConstant.QUERY_SETMEALLIST_SUCCESS,setmeal);
     }
 }

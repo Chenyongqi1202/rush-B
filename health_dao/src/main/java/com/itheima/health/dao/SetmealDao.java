@@ -89,4 +89,11 @@ public interface SetmealDao {
      * @return
      */
     List<Setmeal> findAll();
+
+    /**
+     * 套餐页面详情展示
+     * @param id
+     * @return
+     */
+    Setmeal findDetailById(int id);
 }
